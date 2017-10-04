@@ -1,24 +1,27 @@
 import io
 
-from sinais import analisar, filtrar
+from sinais import analisar, filtrar, listar
+
 
 def test_analisar_letra_A():
-    linha = '00C7;LATIN CAPITAL LETTER C WITH CEDILLA;Lu;0;L;0043 0327;;;;N;LATIN CAPITAL LETTER C CEDILLA;;;00E7;'
+    linha = ('00C7;LATIN CAPITAL LETTER C WITH CEDILLA;Lu;0;L;0043 0327'
+             ';;;;N;LATIN CAPITAL LETTER C CEDILLA;;;00E7;')
     resultado = analisar(linha)
-    assert resultado == ('Ç' , 'LATIN CAPITAL LETTER C WITH CEDILLA')
+    assert resultado == ('Ç', 'LATIN CAPITAL LETTER C WITH CEDILLA')
 
 
 def test_analisar_menor_que():
     linha = '003C;LESS-THAN SIGN;Sm;0;ON;;;;;Y;;;;;'
     resultado = analisar(linha)
-    assert resultado == ('<' , 'LESS-THAN SIGN')
+    assert resultado == ('<', 'LESS-THAN SIGN')
 
 
 def test_filtrar_menor_que():
     linha = '003C;LESS-THAN SIGN;Sm;0;ON;;;;;Y;;;;;'
     arquivo = io.StringIO(linha)
     resultado = list(filtrar(arquivo, 'less'))
-    assert resultado == [('<' , 'LESS-THAN SIGN')]    
+    assert resultado == [('<', 'LESS-THAN SIGN')]
+
 
 LINHAS = '''
 002C;COMMA;Po;0;CS;;;;;N;;;;;
@@ -30,14 +33,18 @@ LINHAS = '''
 0032;DIGIT TWO;Nd;0;EN;;2;2;2;N;;;;;
 '''
 
+
 def test_filtrar_3_digitos():
     arquivo = io.StringIO(LINHAS)
     resultado = list(filtrar(arquivo, 'digit'))
     assert resultado == [
-        ('0' , 'DIGIT ZERO'),
-        ('1' , 'DIGIT ONE'),
-        ('2' , 'DIGIT TWO'),
-        ]    
-    
+        ('0', 'DIGIT ZERO'),
+        ('1', 'DIGIT ONE'),
+        ('2', 'DIGIT TWO'),
+    ]
 
 
+def test_listar_cruzeiro(capsys):
+    listar('cruzeiro')
+    saída, _ = capsys.readouterr()
+    assert saída == 'U+20A2\t₢\tCRUZEIRO SIGN\n'
