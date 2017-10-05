@@ -9,6 +9,8 @@ def analisar(linha):
     partes = linha.split(';')
     caractere = chr(int(partes[0], 16))
     nome = partes[1]
+    if partes[10]:
+        nome += f' ({partes[10]})'
     return (caractere, nome)
 
 

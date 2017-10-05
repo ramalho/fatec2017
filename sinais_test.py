@@ -4,16 +4,21 @@ from sinais import analisar, filtrar, listar
 
 
 def test_analisar_letra_A():
-    linha = ('00C7;LATIN CAPITAL LETTER C WITH CEDILLA;Lu;0;L;0043 0327'
-             ';;;;N;LATIN CAPITAL LETTER C CEDILLA;;;00E7;')
+    linha = '0041;LATIN CAPITAL LETTER A;Lu;0;L;;;;;N;;;;0061;'
     resultado = analisar(linha)
-    assert resultado == ('Ç', 'LATIN CAPITAL LETTER C WITH CEDILLA')
+    assert resultado == ('A', 'LATIN CAPITAL LETTER A')
 
 
 def test_analisar_menor_que():
     linha = '003C;LESS-THAN SIGN;Sm;0;ON;;;;;Y;;;;;'
     resultado = analisar(linha)
     assert resultado == ('<', 'LESS-THAN SIGN')
+
+
+def test_analizar_ponto():
+    linha = '002E;FULL STOP;Po;0;CS;;;;;N;PERIOD;;;;'
+    resultado = analisar(linha)
+    assert resultado == ('.', 'FULL STOP (PERIOD)')
 
 
 def test_filtrar_menor_que():
