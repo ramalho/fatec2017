@@ -1,6 +1,21 @@
 # Demonstração de TDD com Python e `pytest`
 
-Código desenvolvido durante palestra no [19º Congresso de Tecnologia da FATEC-SP](http://congresso.fatecsp.br/home.html).
+Código-fonte para palestra no [19º Congresso de Tecnologia da FATEC-SP](http://congresso.fatecsp.br/home.html).
+
+Este repositório contém dois tags:
+
+`mvp0`: código que foi implementado durante a palestra
+
+`mvp1`: melhorias para fazer a busca por palavra (em vez de sub-string)
+
+## Exemplo de uso do `mvp1`:
+
+```
+$ ./sinais.py heart smiling
+U+1F60D	😍	SMILING FACE WITH HEART-SHAPED EYES
+U+1F63B	😻	SMILING CAT FACE WITH HEART-SHAPED EYES
+```
+
 
 ## Palestrante
 
