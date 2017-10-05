@@ -9,19 +9,21 @@ def analisar(linha):
     partes = linha.split(';')
     caractere = chr(int(partes[0], 16))
     nome = partes[1]
+    palavras = set(nome.replace('-', ' ').split())
     if partes[10]:
         nome += f' ({partes[10]})'
-    return (caractere, nome)
+        palavras |= set(partes[10].replace('-', ' ').split())
+    return (caractere, nome, palavras)
 
 
 def filtrar(arquivo, consulta):
-    consulta = consulta.upper()
+    consulta = set(consulta.upper().replace('-', ' ').split())
     for linha in arquivo:
         linha = linha.strip()
         if not linha:
             continue
-        caractere, nome = analisar(linha)
-        if consulta in nome:
+        caractere, nome, palavras = analisar(linha)
+        if consulta <= palavras:
             yield caractere, nome
 
 

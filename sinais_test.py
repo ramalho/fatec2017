@@ -6,25 +6,35 @@ from sinais import analisar, filtrar, listar
 def test_analisar_letra_A():
     linha = '0041;LATIN CAPITAL LETTER A;Lu;0;L;;;;;N;;;;0061;'
     resultado = analisar(linha)
-    assert resultado == ('A', 'LATIN CAPITAL LETTER A')
+    assert resultado == ('A', 'LATIN CAPITAL LETTER A',
+                         {'A', 'CAPITAL', 'LATIN', 'LETTER'})
 
 
 def test_analisar_menor_que():
     linha = '003C;LESS-THAN SIGN;Sm;0;ON;;;;;Y;;;;;'
     resultado = analisar(linha)
-    assert resultado == ('<', 'LESS-THAN SIGN')
+    assert resultado == ('<', 'LESS-THAN SIGN',
+                         {'LESS', 'THAN', 'SIGN'})
 
 
 def test_analizar_ponto():
     linha = '002E;FULL STOP;Po;0;CS;;;;;N;PERIOD;;;;'
     resultado = analisar(linha)
-    assert resultado == ('.', 'FULL STOP (PERIOD)')
+    assert resultado == ('.', 'FULL STOP (PERIOD)',
+                         {'FULL', 'PERIOD', 'STOP'})
+
+
+def test_analisar_colchete():
+    linha = '005B;LEFT SQUARE BRACKET;Ps;0;ON;;;;;Y;OPENING SQUARE BRACKET;;;;'
+    resultado = analisar(linha)
+    assert resultado == ('[', 'LEFT SQUARE BRACKET (OPENING SQUARE BRACKET)',
+                         {'LEFT', 'OPENING', 'SQUARE', 'BRACKET'})
 
 
 def test_filtrar_menor_que():
     linha = '003C;LESS-THAN SIGN;Sm;0;ON;;;;;Y;;;;;'
     arquivo = io.StringIO(linha)
-    resultado = list(filtrar(arquivo, 'less'))
+    resultado = list(filtrar(arquivo, 'less sign'))
     assert resultado == [('<', 'LESS-THAN SIGN')]
 
 
